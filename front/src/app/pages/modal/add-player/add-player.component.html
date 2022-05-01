@@ -1,0 +1,39 @@
+<form class="form" [formGroup]="playerForm">
+  <div class="header">
+    <div class="title">Add player</div>
+    <div class="subtitle">
+      this player will be add to the team of the year {{ selectedYear }}
+    </div>
+  </div>
+  <div class="body">
+    <input formControlName="name" class="field" pInputText placeholder="Name" />
+    <input
+      formControlName="lastname"
+      class="field"
+      pInputText
+      placeholder="Last name"
+    />
+    <p-inputNumber
+      class="field"
+      placeholder="Number"
+      inputId="integeronly"
+      formControlName="number"
+    >
+    </p-inputNumber>
+    <p-dropdown
+      formControlName="position"
+      [options]="positions"
+      optionLabel="name"
+      placeholder="Choose a position"
+    ></p-dropdown>
+  </div>
+  <div class="footer">
+    <button
+      (click)="add()"
+      [disabled]="playerForm.invalid"
+      pButton
+      type="button"
+      label="Add"
+    ></button>
+  </div>
+</form>

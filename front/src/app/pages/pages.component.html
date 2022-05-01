@@ -1,0 +1,77 @@
+<section>
+  <header class="header">
+    <div>Maplr</div>
+  </header>
+
+  <main class="body">
+    <p-table
+      #dt
+      [value]="players"
+      [columns]="columns"
+      [globalFilterFields]="[
+        'name',
+        'lastname',
+        'number',
+        'position',
+        'isCaptain'
+      ]"
+      [rows]="5"
+      [paginator]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="caption">
+          <div class="table-header">
+            <div class="title">List of Players</div>
+            <p-dropdown
+              [options]="years"
+              [(ngModel)]="selectedYear"
+              (ngModelChange)="getTeam($event)"
+              placeholder="Choose year"
+              optionLabel="name"
+            ></p-dropdown>
+          </div>
+          <div>Coach: {{ coach ?? "No coach" }}</div>
+          <div>
+            <button
+              [disabled]="!selectedYear"
+              (click)="openModal()"
+              pButton
+              pRipple
+              type="button"
+              label="Add player"
+            ></button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <ng-container *ngFor="let col of columns">
+            <th [pSortableColumn]="col.field">
+              {{ col.header }}
+              <p-sortIcon *ngIf="col.field" [field]="col.field"></p-sortIcon>
+            </th>
+          </ng-container>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-players>
+        <tr>
+          <td>{{ players.name }}</td>
+          <td>{{ players.lastname }}</td>
+          <td>{{ players.position }}</td>
+          <td>{{ players.number }}</td>
+          <td>{{ players.isCaptain ? "true" : "false" }}</td>
+          <td class="set-captain">
+            <button
+              [disabled]="players.isCaptain"
+              (click)="setAsCaptain(players)"
+              pButton
+              label="Set as captain"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </main>
+</section>
